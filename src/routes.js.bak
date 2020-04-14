@@ -1,0 +1,105 @@
+import Login from './views/Login.vue'
+import NotFound from './views/404.vue'
+import Home from './views/Home.vue'
+import Main from './views/Main.vue'
+import Table from './views/nav1/Table.vue'
+import Form from './views/nav1/Form.vue'
+import user from './views/nav1/user.vue'
+import User from './views/group/Employee.vue'
+import Department from './views/group/Department.vue'
+<<<<<<< .mine
+
+||||||| .r106
+import Archive from './views/group/Archive'
+=======
+>>>>>>> .r113
+import SystemConfig from './views/group/SystemConfig'
+import echarts from './views/charts/echarts.vue'
+import Docinfo from './views/docinfo/Docinfo'
+import DocinfoQuery from './views/docinfo/DocinfoQuery'
+import DocUpload from './views/docinfo/DocUpload'
+import DestroyDoc from './views/DocAuthenticate/DestroyDoc'
+import FaultDoc from './views/DocAuthenticate/FaultDoc'
+import RetrieveDoc from './views/DocAuthenticate/RetrieveDoc'
+
+
+let routes = [
+    {
+        path: '/login',
+        component: Login,
+        name: '',
+        hidden: true
+    },
+    {
+        path: '/404',
+        component: NotFound,
+        name: '',
+        hidden: true
+    },
+    //{ path: '/main', component: Main },
+    {
+        path: '/',
+        component: Home,
+        name: '首页',
+        iconCls: 'fa fa-bar-chart',//图标样式class
+        leaf:true, //只有一个节点
+        children: [
+            { path: '/main', component: echarts, name: '首页'},
+        ]
+    },
+    {
+        path: '/',
+        component: Home,
+        name: '组织机构',
+        iconCls: 'fa fa-user-o',
+        children: [
+            { path: '/employee', component: User, name: '用户管理' },
+            { path: '/department', component: Department, name: '部门管理' }
+        ]
+    },
+    {
+        path: '/',
+        component: Home,
+        name: '系统管理',
+        iconCls: 'fa fa-address-card',
+        children: [
+            { path: '/role', component: Main, name: '角色管理' },
+            { path: '/promission', component: Table, name: '权限管理' },
+            { path: '/systemConfig', component: SystemConfig, name: '系统配置' }
+        ]
+
+    },
+    {
+        path: '/',
+        component: Home,
+        name: '档案管理',
+        iconCls: 'fa fa-user-o',
+        children: [
+            { path: '/docinfo', component:  Docinfo, name: '档案录入' },
+<<<<<<< .mine
+            { path: '/docinfoQuery', component:  DocinfoQuery, name: '档案查询' }
+
+||||||| .r106
+            { path: '/docinfoQuery', component:  DocinfoQuery, name: '档案查询' },
+            { path: '/archive', component:  Archive, name: '存档点' }
+=======
+            { path: '/docinfoQuery', component:  DocinfoQuery, name: '档案查询' },
+            { path: '/docupload', component:  DocUpload, name: '档案扫描件上传' }
+>>>>>>> .r113
+        ]
+    },
+    {
+        path: '/',
+        component: Home,
+        name: '档案鉴定',
+        iconCls: 'fa fa-address-card',
+        children: [
+            { path: '/destroyDoc', component: DestroyDoc, name: '档案销毁' },
+            { path: '/faultDoc', component: FaultDoc, name: '档案损坏与丢失' },
+            { path: '/retrieveDoc', component: RetrieveDoc, name: '档案找回' }
+        ]
+
+    }
+];
+
+export default routes;
