@@ -15,7 +15,7 @@ Mock.bootstrap();*/
 
 /*全局配置axios*/
 import axios from 'axios'
-axios.defaults.baseURL = "http://127.0.0.1:8080"
+axios.defaults.baseURL = "http://localhost:8080"
 Vue.prototype.$http = axios
 
 // 给每次请求添加 sessionId

@@ -74,6 +74,7 @@
                     this.handleRoutes();
                     //添加路由
                     this.$router.push({path:'/main'});
+                    console.debug("登录成功");
                 }else {
                     this.$message({
                         message:msg,

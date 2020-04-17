@@ -214,6 +214,7 @@
             },
             //获取档案列表
             getdocs() {
+                //转圈圈
                 this.listLoading = true;
                 let para = {
                     pageNum: this.page,
@@ -224,16 +225,13 @@
                     beginTime:this.filters.beginTime,
                     endTime:this.filters.endTime
                 };
-                //转圈圈
                 //加载数据
-
-                    this.$http.post("/docinfo/page",para).then(res =>{
-                        this.listLoading = false;
-                        let {total,rows} = res.data;
-                        this.total = total;
-                        this.docs = rows;
-                    });
-
+                this.$http.post("/docinfo/page",para).then(res =>{
+                    this.listLoading = false;
+                    let {total,rows} = res.data;
+                    this.total = total;
+                    this.docs = rows;
+                });
             },
             //删除
             handleDel: function (index, row) {

@@ -164,7 +164,8 @@
             return {
                 //高级查询
                 filters: {
-                    keyword: ''
+                    keyword: '',
+                    state:''
                 },
                 docAddress:[],
                 users:[],
@@ -244,17 +245,18 @@
                     this.users=res.data;
                 })
             },
-            //获取用户列表
-                getDocAddress() {
+            //获取存档地点列表
+            getDocAddress() {
+                //转圈圈
                 this.listLoading = true;
                 let para = {
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
-                    keyword:this.filters.keyword
+                    keyword:this.filters.keyword,
+                    state:this.filters.state
                 };
-                //转圈圈
                 //加载数据
-                this.$http.get("/docaddress/list").then(res =>{
+                this.$http.post("/docaddress/list",para).then(res =>{
                     this.listLoading = false;
                     this.docAddress = res.data;
                 });
