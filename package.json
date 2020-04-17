@@ -20,7 +20,8 @@
     "vue-router": "^2.3.0",
     "vuex": "^2.0.0-rc.6",
     "xlsx": "^0.15.3",
-    "braces": "2.3.1"
+    "braces": "2.3.1",
+    "js-yaml": "3.13.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
