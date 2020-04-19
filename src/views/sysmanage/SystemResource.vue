@@ -6,57 +6,40 @@
                 <el-form-item>
                     <el-input v-model="filters.keyword" placeholder="关键字"></el-input>
                 </el-form-item>
-                <el-form-item>
-                    <el-select style="width: 150px" v-model="filters.state" clearable placeholder="--选择状态--">
-                        <el-option
-                                v-for="item in options"
-                                :label="item.label"
-                                :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
+
 
                 <el-form-item>
-                    <el-button type="success" icon="el-icon-search" plain round v-on:click="getDocAddress">查询</el-button>
+                    <el-button type="success" plain round v-on:click="getSystemConfig">查询</el-button>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="warning" icon="el-icon-plus" plain round @click="handleAdd">新增</el-button>
+                    <el-button type="warning" plain round @click="handleAdd">新增</el-button>
                 </el-form-item>
             </el-form>
         </el-col>
 
         <!--列表-->
-        <el-table stripe border :data="docAddress" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+        <el-table stripe border :data="systemConfig" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
 
             <el-table-column type="index" width="60" label="#">
             </el-table-column>
-            <el-table-column prop="id" label="存档点编号" width="130" sortable>
+            <el-table-column prop="systemName" label="系统名称" width="130" sortable>
             </el-table-column>
-            <el-table-column prop="name" label="存档点名称" width="130"  sortable>
+            <el-table-column prop="companyName" label="公司名称" width="130"  sortable>
             </el-table-column>
-            <el-table-column prop="tel" label=联系电话" width="130" sortable>
+            <el-table-column prop="companyTel" label="公司电话" width="150" sortable>
             </el-table-column>
-            <el-table-column prop="address" label="存档点地址" width="150" sortable>
+            <el-table-column prop="companyFax" label="公司传真" width="150" sortable>
             </el-table-column>
-            <el-table-column prop="fax" label="传真" width="130" sortable>
+            <el-table-column prop="companyURL" label="公司网址" width="150" sortable>
             </el-table-column>
-            <el-table-column prop="contact" label="联系人" width="120"  sortable>
-            </el-table-column>
-
-            <el-table-column prop="decs" label="备注" width="110" sortable>
+            <el-table-column prop="companyAddress" label="公司地址" width="150" sortable>
             </el-table-column>
 
-            <el-table-column prop="state" label="状态" width="100" sortable>
-                <template scope="scope">
-                    <button style="color: green" v-if="scope.row.state==1">启用</button>
-                    <button style="color: red" v-else>禁用</button>
-                </template>
-            </el-table-column>
 
             <el-table-column label="操作" min-width="160">
                 <template scope="scope">
-                    <el-button type="primary" plain round icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                    <el-button type="danger" plain round  icon="el-icon-delete" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+                    <el-button type="primary" plain round  @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                    <el-button type="danger" plain round  @click="handleDel(scope.$index, scope.row)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -67,40 +50,33 @@
             </el-pagination>
         </el-col>
 
+
         <!--编辑界面-->
         <el-dialog width="25%" title="编辑" :visible.sync="editFormVisible" >
             <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
 
-                <el-form-item label="存档名称" prop="name">
-                    <el-input v-model="editForm.name" auto-complete="off"></el-input>
+                <el-form-item label="系统名称" prop="systemName">
+                    <el-input v-model="editForm.systemName" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="联系人" prop="contact">
-                    <el-input v-model="editForm.contact" auto-complete="off"></el-input>
+                <el-form-item label="公司名称" prop="companyName">
+                    <el-input v-model="editForm.companyName" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="联系号码" prop="tel">
-                    <el-input v-model="editForm.tel" auto-complete="off"></el-input>
-                </el-form-item>
-
-                <el-form-item label="传真" prop="fax">
-                    <el-input v-model="editForm.fax" auto-complete="off"></el-input>
+                <el-form-item label="公司电话" prop="companyTel">
+                    <el-input v-model="editForm.companyTel" auto-complete="off"></el-input>
                 </el-form-item>
 
-                <el-form-item label="存档地址" prop="address">
-                    <el-input v-model="editForm.address" auto-complete="off"></el-input>
+                <el-form-item label="公司传真" prop="companyFax">
+                    <el-input v-model="editForm.companyFax" auto-complete="off"></el-input>
                 </el-form-item>
 
-                <el-form-item label="备注" prop="decs">
-                    <el-input v-model="editForm.decs" auto-complete="off"></el-input>
+                <el-form-item label="公司地址" prop="companyAddress">
+                    <el-input v-model="editForm.companyAddress" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="状态" prop="state">
-                    <el-select v-model="editForm.state" >
-                        <el-option
-                                v-for="item in options"
-                                :label="item.label"
-                                :value="item.value">
-                        </el-option>
-                    </el-select>
+
+                <el-form-item label="公司网址" prop="companyURL">
+                    <el-input v-model="editForm.companyURL" auto-complete="off"></el-input>
                 </el-form-item>
+
 
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -114,36 +90,29 @@
         <el-dialog title="新增" @click="addFormVisible=true" width="25%" :visible.sync="addFormVisible" >
             <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
 
-                <el-form-item label="存档名称" prop="name">
-                    <el-input v-model="addForm.name" auto-complete="off"></el-input>
+                <el-form-item label="系统名称" prop="systemName">
+                    <el-input v-model="addForm.systemName" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="联系人" prop="contact">
-                    <el-input v-model="addForm.contact" auto-complete="off"></el-input>
+                <el-form-item label="公司名称" prop="companyName">
+                    <el-input v-model="addForm.companyName" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="联系号码" prop="tel">
-                    <el-input v-model="addForm.tel" auto-complete="off"></el-input>
-                </el-form-item>
-
-                <el-form-item label="传真" prop="fax">
-                    <el-input v-model="addForm.fax" auto-complete="off"></el-input>
+                <el-form-item label="公司电话" prop="companyTel">
+                    <el-input v-model="addForm.companyTel" auto-complete="off"></el-input>
                 </el-form-item>
 
-                <el-form-item label="存档地址" prop="address">
-                    <el-input v-model="addForm.address" auto-complete="off"></el-input>
+                <el-form-item label="公司传真" prop="companyFax">
+                    <el-input v-model="addForm.companyFax" auto-complete="off"></el-input>
                 </el-form-item>
 
-                <el-form-item label="备注" prop="decs">
-                    <el-input v-model="addForm.decs" auto-complete="off"></el-input>
+                <el-form-item label="公司地址" prop="companyAddress">
+                    <el-input v-model="addForm.companyAddress" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="状态" prop="state">
-                    <el-select v-model="addForm.state" >
-                        <el-option
-                                v-for="item in options"
-                                :label="item.label"
-                                :value="item.value">
-                        </el-option>
-                    </el-select>
+
+                <el-form-item label="公司网址" prop="companyURL">
+                    <el-input v-model="addForm.companyURL" auto-complete="off"></el-input>
                 </el-form-item>
+
+
 
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -157,25 +126,16 @@
 
 <script>
     import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
-    import Department from "../sysmanage/Department";
+    import Department from "./Department";
 
     export default {
         data() {
             return {
                 //高级查询
                 filters: {
-                    keyword: '',
-                    state:''
+                    keyword: ''
                 },
-                docAddress:[],
-                users:[],
-                options:[{
-                    value: 1,
-                    label: '启用'
-                },{
-                    value: -1,
-                    label: '禁用'
-                }],
+                systemConfig:[],
                 //分页
                 total: 0,
                 pageSize:10,
@@ -187,25 +147,26 @@
                 editLoading: false,
                 //表单验证
                 editFormRules: {
-                    name: [
-                        { required: true, message: '请输入用户名', trigger: 'blur' }
+                    companyName: [
+                        { required: true, message: '请输入公司名称', trigger: 'blur' }
                     ],
-                    phoneNum:[
+                    systemName: [
+                        { required: true, message: '请输入系统名称', trigger: 'blur' }
+                    ],
+                    companyTel:[
                         {required: true,pattern:/^1[3-9]{1}[0-9]{9}$/,message:'请输入正确的联系方式',trigger: 'blur'}
                     ],
 
                 },
-
                 //编辑界面数据
                 editForm: {
                     id:'',
-                    fax: '',
-                    name: '',
-                    tel: '',
-                    contact:'',
-                    address:'',
-                    decs: '',
-                    state:''
+                    systemName: '',
+                    companyName: '',
+                    companyTel: '',
+                    companyFax:'',
+                    companyAddress:'',
+                    companyURL: ''
                 },
 
                 addFormVisible: false,//新增界面是否显示
@@ -215,7 +176,7 @@
                     name: [
                         { required: true, message: '请输入用户名', trigger: 'blur' }
                     ],
-                    phoneNum:[
+                    companyTel:[
                         {required: true,pattern:/^1[3-9]{1}[0-9]{9}$/,message:'请输入正确的联系方式',trigger: 'blur'}
                     ],
 
@@ -224,13 +185,12 @@
                 },
                 //新增界面数据
                 addForm: {
-                    fax: '',
-                    name: '',
-                    tel: '',
-                    contact:'',
-                    address:'',
-                    decs: '',
-                    state:''
+                    systemName: '',
+                    companyName: '',
+                    companyTel: '',
+                    companyFax:'',
+                    companyAddress:'',
+                    companyURL: ''
                 }
 
             }
@@ -238,27 +198,20 @@
         methods: {
             handleCurrentChange(val) {
                 this.pageNum = val;
-                this.getDocAddress();
+                this.getSystemConfig();
             },
-            getUser(){
-                this.$http.post("/users").then(res=>{
-                    this.users=res.data;
-                })
-            },
-            //获取存档地点列表
-            getDocAddress() {
-                //转圈圈
+
+            //获取用户列表
+            getSystemConfig() {
                 this.listLoading = true;
                 let para = {
-                    pageNum: this.pageNum,
-                    pageSize: this.pageSize,
-                    keyword:this.filters.keyword,
-                    state:this.filters.state
+                    keyword:this.filters.keyword
                 };
+                //转圈圈
                 //加载数据
-                this.$http.post("/docaddress/list",para).then(res =>{
+                this.$http.post("/systemConfig/list",para).then(res =>{
                     this.listLoading = false;
-                    this.docAddress = res.data;
+                    this.systemConfig = res.data;
                 });
             },
             //删除
@@ -267,7 +220,7 @@
                     type: 'warning'
                 }).then(() => {
                     this.listLoading = true;
-                    this.$http.delete("/docaddress/delete?id="+row.id).then(res=>{
+                    this.$http.delete("/systemConfig/delete?id="+row.id).then(res=>{
                         this.listLoading = false;
                         let {success,msg} = res.data;
                         if(success){
@@ -275,7 +228,7 @@
                                 message: msg,
                                 type: 'success'
                             });
-                            this.getDocAddress();
+                            this.getSystemConfig();
                         }else{
                             this.$message({
                                 message: msg,
@@ -296,7 +249,6 @@
             //显示新增界面
             handleAdd() {
                 this.addFormVisible = true;
-
                 this.addForm = []
             },
             //编辑提交
@@ -306,20 +258,20 @@
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
                             this.editLoading = true;
                             let para = Object.assign({}, this.editForm);
-                            this.$http.post("/docaddress/update",para).then(res=>{
+                            this.$http.post("/systemConfig/update",para).then(res=>{
                                 this.listLoading = false;
-                                let {success,message} = res.data;
+                                let {success,msg} = res.data;
                                 if(success){
                                     this.$message({
-                                        message: message,
+                                        message: msg,
                                         type: 'success'
                                     });
                                     this.editFormVisible = false;
                                     this.editLoading = false;
-                                    this.getDocAddress();
+                                    this.getSystemConfig();
                                 }else{
                                     this.$message({
-                                        message: message,
+                                        message: msg,
                                         type: 'error'
                                     });
                                 }
@@ -336,19 +288,19 @@
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
                             this.addLoading = true;
                             let para = Object.assign({}, this.addForm);
-                            this.$http.post("/docaddress/insert",para).then(res=>{
+                            this.$http.post("/systemConfig/insert",para).then(res=>{
                                 this.listLoading = false;
-                                let {success,message} = res.data;
+                                let {success,msg} = res.data;
                                 if(success){
                                     this.$message({
-                                        message: message,
+                                        message: msg,
                                         type: 'success'
                                     });
                                     this.addFormVisible = false;
-                                    this.getDocAddress();
+                                    this.getSystemConfig();
                                 }else{
                                     this.$message({
-                                        message: message,
+                                        message: msg,
                                         type: 'error'
                                     });
                                 }
@@ -365,7 +317,7 @@
             //批量删除
         },
         mounted() {
-            this.getDocAddress();
+            this.getSystemConfig();
 
         }
     }
