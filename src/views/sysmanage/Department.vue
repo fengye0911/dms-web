@@ -37,18 +37,18 @@
             </el-table-column>
             <el-table-column prop="phoneNum" label="联系电话" width="110" sortable>
             </el-table-column>
-            <el-table-column prop="fax" label="传真" width="110" sortable>
+            <el-table-column prop="fax" label="传真" width="90" sortable>
             </el-table-column>
 
-            <el-table-column prop="parent.name" label="上级部门"  width="120" sortable>
+            <el-table-column prop="parent.name" label="上级部门"  width="110" sortable>
             </el-table-column>
-            <el-table-column prop="manager.realName" label="部门主管" width="120"  sortable>
-            </el-table-column>
-
-            <el-table-column prop="comment" label="备注" width="110" sortable>
+            <el-table-column prop="manager.realName" label="部门主管" width="110"  sortable>
             </el-table-column>
 
-            <el-table-column prop="state" label="状态"   width="100" sortable>
+            <el-table-column prop="comment" label="备注" width="80" sortable>
+            </el-table-column>
+
+            <el-table-column prop="state" label="状态"   width="80" sortable>
                 <template scope="scope">
                     <button style="color: green" v-if="scope.row.state==0">启用</button>
                     <button style="color: red" v-else>禁用</button>

@@ -208,6 +208,7 @@
 
             this.getdoctypes();
             this.getdocaddress();
+            this.getdocs();
 
 
         }

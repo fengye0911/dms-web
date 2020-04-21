@@ -124,7 +124,7 @@
 
         },
         mounted(){
-
+            this.getdocs();
         }
     }
 </script>

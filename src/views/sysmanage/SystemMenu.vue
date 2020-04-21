@@ -18,21 +18,27 @@
         </el-col>
 
         <!--列表-->
-        <el-table stripe border :data="systemConfig" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+        <el-table stripe border :data="menudata" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
 
             <el-table-column type="index" width="60" label="#">
             </el-table-column>
-            <el-table-column prop="systemName" label="系统名称" width="130" sortable>
+            <el-table-column prop="name" label="菜单名称" width="130" sortable>
             </el-table-column>
-            <el-table-column prop="companyName" label="公司名称" width="130"  sortable>
+            <el-table-column prop="url" label="路径" width="130"  sortable>
             </el-table-column>
-            <el-table-column prop="companyTel" label="公司电话" width="150" sortable>
+            <el-table-column prop="icon" label="图标" width="120" sortable>
             </el-table-column>
-            <el-table-column prop="companyFax" label="公司传真" width="150" sortable>
+            <el-table-column prop="parent_id" label="上级菜单" width="110" sortable>
             </el-table-column>
-            <el-table-column prop="companyURL" label="公司网址" width="150" sortable>
+            <el-table-column prop="remark" label="备注" width="80" sortable>
             </el-table-column>
-            <el-table-column prop="companyAddress" label="公司地址" width="150" sortable>
+            <el-table-column prop="status" label="状态" width="80" sortable >
+                <template scope="scope">
+                    <span style="color: blue;" v-if="scope.row.status==0">启用</span>
+                    <span style="color: crimson" v-else>禁用</span>
+                </template>
+            </el-table-column>
+            <el-table-column prop="component" label="组件路径" width="170" sortable>
             </el-table-column>
 
 
@@ -135,7 +141,7 @@
                 filters: {
                     keyword: ''
                 },
-                systemConfig:[],
+                menudata:[],
                 //分页
                 total: 0,
                 pageSize:10,
@@ -198,20 +204,25 @@
         methods: {
             handleCurrentChange(val) {
                 this.pageNum = val;
-                this.getSystemConfig();
+                this.getMenuData();
             },
 
             //获取用户列表
-            getSystemConfig() {
+            getMenuData() {
                 this.listLoading = true;
                 let para = {
+                    pageNum: this.pageNum,
+                    pageSize: this.pageSize,
                     keyword:this.filters.keyword
                 };
                 //转圈圈
                 //加载数据
-                this.$http.post("/systemConfig/list",para).then(res =>{
+                this.$http.post("/menu/list",para).then(res =>{
                     this.listLoading = false;
-                    this.systemConfig = res.data;
+                    let {success,msg,resobj} = res.data;
+                    this.menudata = resobj.rows;
+                    this.total = resobj.total;
+                    console.debug("this.menudata",res);
                 });
             },
             //删除
@@ -317,7 +328,7 @@
             //批量删除
         },
         mounted() {
-            this.getSystemConfig();
+            this.getMenuData();
 
         }
     }
