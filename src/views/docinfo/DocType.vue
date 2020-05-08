@@ -1,7 +1,6 @@
 <template>
     <div>
         <div class="container">
-
             <el-table
                     @row-click="handleRowclick"
                     :data="tableData"
