@@ -57,16 +57,17 @@
         this.$refs.ruleForm2.resetFields();
       },
       handleSubmit2() {
+        const that = this;
         this.$refs.ruleForm2.validate((valid) => {
           if (valid) {
             this.logining = true;
-             var loginParams = { username: this.ruleForm2.account, password: this.ruleForm2.checkPass };
+            var loginParams = { username: this.ruleForm2.account, password: this.ruleForm2.checkPass };
             this.$http.post("/login",loginParams).then(res =>{
                 this.logining = false;
-                let {success,msg,resobj} = res.data;
-                let {user,sessionId,menus} = resobj;
-                if(success){
-                    sessionStorage.setItem('user',JSON.stringify(user));
+                let {code,message,data} = res.data;
+                let {userId,sessionId,menus} = data;
+                if(code == "00000000"){
+                    sessionStorage.setItem('userId',JSON.stringify(userId));
                     sessionStorage.setItem("sessionId",sessionId);
                     sessionStorage.setItem("menus",JSON.stringify(menus));
 
@@ -77,7 +78,7 @@
                     console.debug("登录成功");
                 }else {
                     this.$message({
-                        message:msg,
+                        message:message,
                         type:'error'
                     });
                 }

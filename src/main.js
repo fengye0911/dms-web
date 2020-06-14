@@ -84,15 +84,30 @@ function initRoutes() {
 router.beforeEach((to, from, next) => {
   //NProgress.start();
   if (to.path == '/login') {
-    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('userId');
+    sessionStorage.removeItem("sessionId");
+    sessionStorage.removeItem("menus");
   }
-  let user = JSON.parse(sessionStorage.getItem('user'));
-  if (!user && to.path != '/login') {
+  let userId = JSON.parse(sessionStorage.getItem('userId'));
+  if (!userId && to.path != '/login') {
     next({ path: '/login' })
   } else {
     next()
   }
 })
+axios.interceptors.request.use(
+    config=> {
+        if (sessionStorage.getItem("token")) {
+            config.headers.common['X-Authorization'] = "Bearer " + sessionStorage.getItem("token");
+        }
+        return config;
+    }
+    // },
+    // function (error) {
+    //     router.push('/login')
+    //     return Promise.reject(error)
+    //     })
+)
 
 //router.afterEach(transition => {
 //NProgress.done();

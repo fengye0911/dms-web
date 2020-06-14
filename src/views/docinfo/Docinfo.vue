@@ -421,7 +421,8 @@
                 })
             },
             getdocAddresses(){
-                this.$http.get("/docaddress/list").then(res=>{
+                this.$http.post("/docaddress/list",{}).then(res=>{
+                    console.debug(res.data)
                     this.docAddresses = res.data;
                 })
             },
@@ -454,6 +455,7 @@
             },
             getsendDepts(){
                 this.$http.get("/dicdetail/dept").then(res=>{
+                    console.debug(res.data)
                     this.sendDepts = res.data;
                 })
             },
