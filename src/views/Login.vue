@@ -65,11 +65,12 @@
             this.$http.post("/login",loginParams).then(res =>{
                 this.logining = false;
                 let {code,message,data} = res.data;
-                let {userId,sessionId,menus} = data;
+                let {userId,sessionId,menus,token} = data;
                 if(code == "00000000"){
                     sessionStorage.setItem('userId',JSON.stringify(userId));
                     sessionStorage.setItem("sessionId",sessionId);
                     sessionStorage.setItem("menus",JSON.stringify(menus));
+                    sessionStorage.setItem("token",JSON.stringify(token));
 
                     // 修改路由对象中routes数组
                     this.handleRoutes();
