@@ -95,6 +95,8 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
+//让ajax携带cookie
+axios.defaults.withCredentials=true;
 axios.interceptors.request.use(
     config=> {
         if (sessionStorage.getItem("token")) {
