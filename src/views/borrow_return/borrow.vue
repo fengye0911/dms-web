@@ -1,6 +1,5 @@
 <template>
     <section>
-
         <el-table :data="pages" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
             <el-table-column prop="sn" width="120" label="编号" sortable>
             </el-table-column>

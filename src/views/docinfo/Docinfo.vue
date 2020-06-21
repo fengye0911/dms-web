@@ -283,10 +283,10 @@
     export default {
         data() {
             return {
-                doctypes:[],
-                docAddresses:[],
-                sendDepts:[],
-                sendUnits:[],
+                doctypes:"",
+                docAddresses:"",
+                sendDepts:"",
+                sendUnits:"",
                 username:"",
                 disabled: false,
                 statues:[
@@ -339,19 +339,19 @@
                 addLoading: false,
                 addFormRules: {
                     docType_id: [
-                        { required: true, message: '请选择档案类型！', trigger: 'change' }
+                        { required: true, message: '请选择档案类型！', trigger: 'blur' }
                     ],
                     docAddress_id:[
-                        { required: true, message: '请选择档案存档点！', trigger: 'change' }
+                        { required: true, message: '请选择档案存档点！', trigger: 'blur' }
                     ],
                     docnum:[
                         { required: true, message: '请正确输入档案编号！', trigger: 'blur' }
                     ],
                     sendDept_id:[
-                        { required: true, message: '请选择来文部门！', trigger: 'change' }
+                        { required: true, message: '请选择来文部门！', trigger: 'blur' }
                     ],
                     sendUnit_id:[
-                        { required: true, message: '请选择发文单位！', trigger: 'change' }
+                        { required: true, message: '请选择发文单位！', trigger: 'blur' }
                     ],
                     sendUser:[
                         { required: true, message: '请正确输入发文人！', trigger: 'blur' }
@@ -360,7 +360,7 @@
                         { required: true, message: '请选择过期时间！', trigger: 'blur' }
                     ],
                     status:[
-                        { required: true, message: '请选择档案状态！', trigger: 'change' }
+                        { required: true, message: '请选择档案状态！', trigger: 'blur' }
                     ]
 
 

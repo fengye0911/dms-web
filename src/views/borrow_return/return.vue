@@ -1,5 +1,6 @@
 <template>
-    <div style="margin-top: 15px;">
+    <section>
+        <div style="margin-top: 15px;">
         <el-input placeholder="请输入借阅编号, 如B1" v-model="borrowSn" class="input-with-select">
             <el-button slot="append" icon="el-icon-search" class="search" @click="handleSearch"></el-button>
         </el-input>
@@ -53,6 +54,7 @@
             </div>
         </el-dialog>
     </div>
+    </section>
 </template>
 
 <script>
@@ -170,6 +172,9 @@
                 });
 
             }
+        },
+        mounted() {
+            this.handleSearch();
         }
     }
 </script>

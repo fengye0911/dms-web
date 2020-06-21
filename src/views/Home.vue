@@ -130,7 +130,7 @@
 			return {
 				editLoading:'',
 				editpassword:false,
-				sysName:'智慧档案管理系统',
+				sysName:'老赵档案管理系统',
 				collapsed:false,
 				sysUserName: '',
 				sysUserAvatar: '',

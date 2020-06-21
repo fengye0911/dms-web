@@ -2,6 +2,7 @@ import babelpolyfill from 'babel-polyfill'
 import Vue from 'vue'
 import App from './App'
 import ElementUI from 'element-ui'
+import { Message } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 //import './assets/theme/theme-green/index.css'
 import VueRouter from 'vue-router'
@@ -87,6 +88,7 @@ router.beforeEach((to, from, next) => {
     sessionStorage.removeItem('userId');
     sessionStorage.removeItem("sessionId");
     sessionStorage.removeItem("menus");
+    sessionStorage.removeItem("token");
   }
   let userId = JSON.parse(sessionStorage.getItem('userId'));
   if (!userId && to.path != '/login') {
@@ -110,6 +112,32 @@ axios.interceptors.request.use(
     //     return Promise.reject(error)
     //     })
 )
+
+// http响应拦截器
+axios.interceptors.response.use(data => {
+    const code = data.data.code;
+    if(code == 70000004) { //未登录
+        Message.error("登录信息已失效，请重新登录！")
+        store.commit(type.logout())
+        router.replace({
+            path: '/Login'
+            // 登录成功后跳入浏览的当前页面
+            // query: {redirect: router.currentRoute.fullPath}
+        })
+    }
+
+    return data
+}, error => {
+    loadinginstace.close();
+    const code = error.data.code;
+    console.debug(code);
+    // 此处判断拦截需要处理的错误状态码并处理
+    if(code == 70000004) {
+
+    }
+
+    return Promise.reject(error)
+})
 
 //router.afterEach(transition => {
 //NProgress.done();

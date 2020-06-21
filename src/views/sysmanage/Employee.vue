@@ -43,7 +43,7 @@
             <el-table-column prop="username" label="用户名" width="90" sortable>
             </el-table-column>
 
-            <el-table-column prop="password" label="密码" width="85"  sortable>
+            <el-table-column prop="password" label="密码" width="85"  sortable v-if="show">
             </el-table-column>
 
             <el-table-column prop="hireDate" :formatter="dateFormat" label="入职日期" width="110" sortable>
@@ -287,6 +287,7 @@
     export default {
         data() {
             return {
+                show:false,
                 //高级查询
                 filters: {
                     keyword: '',
@@ -352,8 +353,14 @@
                     hireDate:'',
                     gender:'',
                     birthDate: '',
-                    dept_id:'',
-                    education_id:'',
+                    department:{
+                        dept_id:'',
+                        name:''
+                    },
+                    education:{
+                        education_id:'',
+                        name:''
+                    },
                     comment: '',
                     address: '',
                     phoneNum: '',
@@ -490,8 +497,8 @@
             //显示编辑界面
             handleEdit(index, row) {
                 this.editForm = Object.assign({}, row);
-                this.editForm.education_id =row.education.name;
-                this.editForm.dept_id =row.department.name;
+                this.editForm.education.name =row.education.name;
+                this.editForm.department.name =row.department.name;
                 this.editFormVisible = true;
             },
             //显示新增界面
@@ -509,7 +516,7 @@
                             //NProgress.start();
                             let para = Object.assign({}, this.editForm);
                             console.log(para)
-                            this.$http.post("/user",para).then(res=>{
+                            this.$http.post("/user/save",para).then(res=>{
                                 this.listLoading = false;
                                 let {success,msg} = res.data;
                                 if(success){
@@ -539,7 +546,7 @@
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
                             this.addLoading = true;
                             let para = Object.assign({}, this.addForm);
-                            this.$http.post("/user",para).then(res=>{
+                            this.$http.post("/user/save",para).then(res=>{
                                 this.listLoading = false;
                                 let {success,msg} = res.data;
                                 if(success){

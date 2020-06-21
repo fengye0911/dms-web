@@ -9,7 +9,7 @@
 
 
                 <el-form-item>
-                    <el-button type="success" plain round v-on:click="getSystemConfig">查询</el-button>
+                    <el-button type="success" plain round v-on:click="getMenuData">查询</el-button>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="warning" plain round @click="handleAdd">新增</el-button>
@@ -61,26 +61,26 @@
         <el-dialog width="25%" title="编辑" :visible.sync="editFormVisible" >
             <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
 
-                <el-form-item label="系统名称" prop="systemName">
-                    <el-input v-model="editForm.systemName" auto-complete="off"></el-input>
+                <el-form-item label="菜单名称" prop="name">
+                    <el-input v-model="editForm.name" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="公司名称" prop="companyName">
-                    <el-input v-model="editForm.companyName" auto-complete="off"></el-input>
+                <el-form-item label="路径" prop="url">
+                    <el-input v-model="editForm.url" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="公司电话" prop="companyTel">
-                    <el-input v-model="editForm.companyTel" auto-complete="off"></el-input>
-                </el-form-item>
-
-                <el-form-item label="公司传真" prop="companyFax">
-                    <el-input v-model="editForm.companyFax" auto-complete="off"></el-input>
+                <el-form-item label="图标" prop="icon">
+                    <el-input v-model="editForm.icon" auto-complete="off"></el-input>
                 </el-form-item>
 
-                <el-form-item label="公司地址" prop="companyAddress">
-                    <el-input v-model="editForm.companyAddress" auto-complete="off"></el-input>
+                <el-form-item label="上级菜单" prop="parent_id">
+                    <el-input v-model="editForm.parent_id" auto-complete="off"></el-input>
                 </el-form-item>
 
-                <el-form-item label="公司网址" prop="companyURL">
-                    <el-input v-model="editForm.companyURL" auto-complete="off"></el-input>
+                <el-form-item label="备注" prop="remark">
+                    <el-input v-model="editForm.remark" auto-complete="off"></el-input>
+                </el-form-item>
+
+                <el-form-item label="状态" prop="status">
+                    <el-input v-model="editForm.status" auto-complete="off"></el-input>
                 </el-form-item>
 
 
@@ -96,26 +96,26 @@
         <el-dialog title="新增" @click="addFormVisible=true" width="25%" :visible.sync="addFormVisible" >
             <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
 
-                <el-form-item label="系统名称" prop="systemName">
-                    <el-input v-model="addForm.systemName" auto-complete="off"></el-input>
+                <el-form-item label="菜单名称" prop="name">
+                    <el-input v-model="addForm.name" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="公司名称" prop="companyName">
-                    <el-input v-model="addForm.companyName" auto-complete="off"></el-input>
+                <el-form-item label="路径" prop="url">
+                    <el-input v-model="addForm.url" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="公司电话" prop="companyTel">
-                    <el-input v-model="addForm.companyTel" auto-complete="off"></el-input>
-                </el-form-item>
-
-                <el-form-item label="公司传真" prop="companyFax">
-                    <el-input v-model="addForm.companyFax" auto-complete="off"></el-input>
+                <el-form-item label="图标" prop="icon">
+                    <el-input v-model="addForm.icon" auto-complete="off"></el-input>
                 </el-form-item>
 
-                <el-form-item label="公司地址" prop="companyAddress">
-                    <el-input v-model="addForm.companyAddress" auto-complete="off"></el-input>
+                <el-form-item label="上级菜单" prop="parent_id">
+                    <el-input v-model="addForm.parent_id" auto-complete="off"></el-input>
                 </el-form-item>
 
-                <el-form-item label="公司网址" prop="companyURL">
-                    <el-input v-model="addForm.companyURL" auto-complete="off"></el-input>
+                <el-form-item label="备注" prop="remark">
+                    <el-input v-model="addForm.remark" auto-complete="off"></el-input>
+                </el-form-item>
+
+                <el-form-item label="状态" prop="status">
+                    <el-input v-model="addForm.status" auto-complete="off"></el-input>
                 </el-form-item>
 
 
@@ -167,12 +167,12 @@
                 //编辑界面数据
                 editForm: {
                     id:'',
-                    systemName: '',
-                    companyName: '',
-                    companyTel: '',
-                    companyFax:'',
-                    companyAddress:'',
-                    companyURL: ''
+                    name: '',
+                    url: '',
+                    icon: '',
+                    parent_id:'',
+                    remark:'',
+                    status: ''
                 },
 
                 addFormVisible: false,//新增界面是否显示
@@ -191,12 +191,13 @@
                 },
                 //新增界面数据
                 addForm: {
-                    systemName: '',
-                    companyName: '',
-                    companyTel: '',
-                    companyFax:'',
-                    companyAddress:'',
-                    companyURL: ''
+                    id:'',
+                    name: '',
+                    url: '',
+                    icon: '',
+                    parent_id:'',
+                    remark:'',
+                    status: ''
                 }
 
             }
@@ -231,7 +232,7 @@
                     type: 'warning'
                 }).then(() => {
                     this.listLoading = true;
-                    this.$http.delete("/systemConfig/delete?id="+row.id).then(res=>{
+                    this.$http.delete("/menu/delete?id="+row.id).then(res=>{
                         this.listLoading = false;
                         let {success,msg} = res.data;
                         if(success){
@@ -239,7 +240,7 @@
                                 message: msg,
                                 type: 'success'
                             });
-                            this.getSystemConfig();
+                            this.getMenuDatar();
                         }else{
                             this.$message({
                                 message: msg,
@@ -254,6 +255,7 @@
             },
             //显示编辑界面
             handleEdit(index, row) {
+                console.debug(row);
                 this.editForm = Object.assign({}, row);
                 this.editFormVisible = true;
             },
@@ -269,7 +271,7 @@
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
                             this.editLoading = true;
                             let para = Object.assign({}, this.editForm);
-                            this.$http.post("/systemConfig/update",para).then(res=>{
+                            this.$http.post("/menu/update",para).then(res=>{
                                 this.listLoading = false;
                                 let {success,msg} = res.data;
                                 if(success){
@@ -279,7 +281,7 @@
                                     });
                                     this.editFormVisible = false;
                                     this.editLoading = false;
-                                    this.getSystemConfig();
+                                    this.getMenuData();
                                 }else{
                                     this.$message({
                                         message: msg,
@@ -299,7 +301,7 @@
                         this.$confirm('确认提交吗？', '提示', {}).then(() => {
                             this.addLoading = true;
                             let para = Object.assign({}, this.addForm);
-                            this.$http.post("/systemConfig/insert",para).then(res=>{
+                            this.$http.post("/menu/insert",para).then(res=>{
                                 this.listLoading = false;
                                 let {success,msg} = res.data;
                                 if(success){
@@ -308,7 +310,7 @@
                                         type: 'success'
                                     });
                                     this.addFormVisible = false;
-                                    this.getSystemConfig();
+                                    this.getMenuData();
                                 }else{
                                     this.$message({
                                         message: msg,

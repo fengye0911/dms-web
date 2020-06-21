@@ -1,7 +1,7 @@
 <template>
   <el-container :style="note" >
   <el-form style="height: 330px; background-color: #f7fff2; margin-right: 160px;" :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-position="left" label-width="0px" class="demo-ruleForm login-container">
-    <h1 class="title">智慧档案管理系统</h1>
+    <h1 class="title">老赵档案管理系统</h1>
     <el-form-item prop="account">
       <el-input type="text"  v-model="ruleForm2.account" auto-complete="off" placeholder="用户名"></el-input>
     </el-form-item>
@@ -70,7 +70,7 @@
                     sessionStorage.setItem('userId',JSON.stringify(userId));
                     sessionStorage.setItem("sessionId",sessionId);
                     sessionStorage.setItem("menus",JSON.stringify(menus));
-                    sessionStorage.setItem("token",JSON.stringify(token));
+                    sessionStorage.setItem("token",token);
 
                     // 修改路由对象中routes数组
                     this.handleRoutes();
