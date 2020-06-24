@@ -107,9 +107,11 @@
         },
         methods: {
             // 显示行
-            showTr: function (row, index) {
+            showTr: function ({row, rowIndex}) {
                 console.debug("行数据：",row)
-                let show = (row._parent  ? (row._parent._expanded && row._parent._show) : true)
+                let obj = {row, rowIndex}
+                let show = (obj.row._parent  ? (obj.row._parent._expanded && obj.row._parent._show) : true)
+                obj.row._show = show
                 console.debug("第",index,"行_parent",row._parent)
                 return show ? '' : 'display:none;'
             },
