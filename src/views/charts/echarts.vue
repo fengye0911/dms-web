@@ -1,15 +1,22 @@
 <template>
-    <section class="chart-container" >
-        <el-carousel interval="5000" height="550px" indicator-position="outside">
-            <el-carousel-item v-for="item in images">
-                <el-image :src=item.src :fit="contain"></el-image>
-                <div>
-                    <label>{{item.text}}</label>
-                    <br/>
-                    <label>{{item.text2}}</label>
-                </div>
-            </el-carousel-item>
-        </el-carousel>
+    <section class="chart-container">
+        <el-row>
+            <el-col :span="12">
+                <div id="chartColumn" style="width:100%; height:400px;"></div>
+            </el-col>
+            <el-col :span="12">
+                <div id="chartBar" style="width:100%; height:400px;"></div>
+            </el-col>
+            <el-col :span="12">
+                <div id="chartLine" style="width:100%; height:400px;"></div>
+            </el-col>
+            <el-col :span="12">
+                <div id="chartPie" style="width:100%; height:400px;"></div>
+            </el-col>
+            <el-col :span="24">
+                <a href="http://echarts.baidu.com/examples.html" target="_blank" style="float: right;">more>></a>
+            </el-col>
+        </el-row>
     </section>
 </template>
 
@@ -19,42 +26,191 @@
     export default {
         data() {
             return {
-                images:[
-                    {src:"/dms-cli/static/image/index1.png",text:"晓云舒瑞  寒影初回长日至",text2:"  —（宋） 阮阅 · 《减字木兰花》"},
-                    {src:"/dms-cli/static/image/index4.png",text:"灯下一身家万里  今年恰好是三冬",text2:"   —（宋） 郑刚中 · 《庚午冬至夜》"},
-                    {src:"/dms-cli/static/image/index2.png",text:"腊前梅蕊未斜横  至后醅香试满觥",text2:"  —（宋） 朱翌 · 《冬至后雪夜》"},
-                    {src:"/dms-cli/static/image/index5.png",text:"天时人事日相催  冬至阳生春又来",text2:"  —（唐） 杜甫 · 《小 至》"}
-                ],
+                chartColumn: null,
+                chartBar: null,
+                chartLine: null,
+                chartPie: null
             }
+        },
+
+        methods: {
+            drawColumnChart() {
+                this.chartColumn = echarts.init(document.getElementById('chartColumn'));
+                this.chartColumn.setOption({
+                  title: { text: 'Column Chart' },
+                  tooltip: {},
+                  xAxis: {
+                      data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+                  },
+                  yAxis: {},
+                  series: [{
+                      name: '销量',
+                      type: 'bar',
+                      data: [5, 20, 36, 10, 10, 20]
+                    }]
+                });
+            },
+            drawBarChart() {
+                this.chartBar = echarts.init(document.getElementById('chartBar'));
+                this.chartBar.setOption({
+                    title: {
+                        text: 'Bar Chart',
+                        subtext: '数据来自网络'
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    },
+                    legend: {
+                        data: ['2011年', '2012年']
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'value',
+                        boundaryGap: [0, 0.01]
+                    },
+                    yAxis: {
+                        type: 'category',
+                        data: ['巴西', '印尼', '美国', '印度', '中国', '世界人口(万)']
+                    },
+                    series: [
+                        {
+                            name: '2011年',
+                            type: 'bar',
+                            data: [18203, 23489, 29034, 104970, 131744, 630230]
+                        },
+                        {
+                            name: '2012年',
+                            type: 'bar',
+                            data: [19325, 23438, 31000, 121594, 134141, 681807]
+                        }
+                    ]
+                });
+            },
+            drawLineChart() {
+                this.chartLine = echarts.init(document.getElementById('chartLine'));
+                this.chartLine.setOption({
+                    title: {
+                        text: 'Line Chart'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data: ['邮件营销', '联盟广告', '搜索引擎']
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [
+                        {
+                            name: '邮件营销',
+                            type: 'line',
+                            stack: '总量',
+                            data: [120, 132, 101, 134, 90, 230, 210]
+                        },
+                        {
+                            name: '联盟广告',
+                            type: 'line',
+                            stack: '总量',
+                            data: [220, 182, 191, 234, 290, 330, 310]
+                        },
+                        {
+                            name: '搜索引擎',
+                            type: 'line',
+                            stack: '总量',
+                            data: [820, 932, 901, 934, 1290, 1330, 1320]
+                        }
+                    ]
+                });
+            },
+            drawPieChart() {
+                this.chartPie = echarts.init(document.getElementById('chartPie'));
+                this.chartPie.setOption({
+                    title: {
+                        text: 'Pie Chart',
+                        subtext: '纯属虚构',
+                        x: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'left',
+                        data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+                    },
+                    series: [
+                        {
+                            name: '访问来源',
+                            type: 'pie',
+                            radius: '55%',
+                            center: ['50%', '60%'],
+                            data: [
+                                { value: 335, name: '直接访问' },
+                                { value: 310, name: '邮件营销' },
+                                { value: 234, name: '联盟广告' },
+                                { value: 135, name: '视频广告' },
+                                { value: 1548, name: '搜索引擎' }
+                            ],
+                            itemStyle: {
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                });
+            },
+            drawCharts() {
+                this.drawColumnChart()
+                this.drawBarChart()
+                this.drawLineChart()
+                this.drawPieChart()
+            },
+        },
+
+        mounted: function () {
+            this.drawCharts()
+        },
+        updated: function () {
+            this.drawCharts()
         }
     }
 </script>
 
 <style scoped>
-    .el-carousel{
-        margin-top: 30px;
+    .chart-container {
+        width: 100%;
+        float: left;
     }
-    .el-carousel__item{
-        width: 950px;
-        margin-right: 50px;
-    }
-    .el-image{
-        margin-left: 260px!important;
-    }
-    h2{
-        display: block;
-        color: #474946;
-        font-family: 微软雅黑;
-        margin-bottom: 8px;
-        text-align: center;
-    }
-    .el-carousel__item label{
-        margin-top: 35px;
-        color: #616360;
-        font-family: 隶书;
-        font-size: 20px;
-        margin-bottom: 8px;
-        text-align: right !important;
-        margin-left: 480px;
+    /*.chart div {
+        height: 400px;
+        float: left;
+    }*/
+
+    .el-col {
+        padding: 30px 20px;
     }
 </style>
