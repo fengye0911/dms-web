@@ -1,7 +1,6 @@
 <template>
     <el-table
             :data="data"
-            border
             style="width: 100%"
             :row-style="showTr">
         <el-table-column v-for="(column, index) in columns" :key="column.dataIndex"
@@ -16,7 +15,7 @@
                 {{scope.row[column.dataIndex]}}
             </template>
         </el-table-column>
-        <el-table-column label="操作" v-if="treeType === 'normal'" width="260">
+        <el-table-column label="" v-if="treeType === 'normal'" width="600">
             <template scope="scope">
                 <button type="button" class="el-button el-button--default el-button--small">
                     <router-link
@@ -107,16 +106,23 @@
         },
         methods: {
             // 显示行
-            showTr: function ({row, rowIndex}) {
-                console.debug("行数据：",row)
+            showTr ({row, rowIndex}) {
                 let obj = {row, rowIndex}
+                console.debug("行数据：",obj.row)
                 let show = (obj.row._parent  ? (obj.row._parent._expanded && obj.row._parent._show) : true)
                 obj.row._show = show
-                console.debug("第",index,"行_parent",row._parent)
-                return show ? '' : 'display:none;'
+                console.debug("第",rowIndex,"行_parent",show)
+                console.debug("第",rowIndex,"行_parent",show ? '' : 'display:none;')
+                let stylejson={}
+                if (show){
+                    stylejson =  ''
+                }else {
+                    stylejson.display = 'none'
+                }
+                return stylejson
             },
             // 展开下级
-            toggle: function (trIndex) {
+            toggle (trIndex) {
                 let me = this
                 let record = me.data[trIndex]
                 record._expanded = !record._expanded

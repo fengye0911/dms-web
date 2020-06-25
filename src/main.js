@@ -2,7 +2,6 @@ import babelpolyfill from 'babel-polyfill'
 import Vue from 'vue'
 import App from './App'
 import ElementUI from 'element-ui'
-import { Message } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 //import './assets/theme/theme-green/index.css'
 import VueRouter from 'vue-router'
@@ -30,6 +29,9 @@ import 'font-awesome/css/font-awesome.min.css'
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(Vuex)
+
+let ElTreeGrid = require('element-tree-grid');
+Vue.component(ElTreeGrid.name,ElTreeGrid);
 
 //NProgress.configure({ showSpinner: false });
 
@@ -117,7 +119,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(data => {
     const code = data.data.code;
     if(code == 70000004) { //未登录
-        Message.error("登录信息已失效，请重新登录！")
+        ElementUI.Message.error("登录信息已失效，请重新登录！")
         store.commit(type.logout())
         router.replace({
             path: '/Login'
